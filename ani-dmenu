@@ -114,8 +114,8 @@ then
 
 else
 
-	search_anime $(echo | dmenu -p "search anime :" | tr ' ' '-' ) > $Temp
-	anime_id=$(cat $Temp | dmenu) 
+	search_anime $(echo | dmenu -p "Search Anime :" | tr ' ' '-' ) > $Temp
+	anime_id=$(cat $Temp | dmenu -l 20 -p "Select Anime :") 
 
 	max=$(search_eps $anime_id)
 	ep_no=$(echo | dmenu -p "ep no[max:"$max"]")
