@@ -28,7 +28,7 @@ make the script executable
 ```bash
 chmod +x ani-dmenu
 ```
-run the script from bash (or any POSIX complaint shells, just don't run this in FISH)
+run the script from bash (or any POSIX complaint shell, just don't run this in FISH)
 ```bash
 bash ./ani-dmenu
 ```
