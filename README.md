@@ -9,7 +9,7 @@ have fun , my fellow weebs
 dmenu , sed , grep , mpv , curl
 
 # supported OS
-GNU/Linux and macOS(probably because the script is POSIX complient)
+GNU/Linux , BSD and macOS(probably because the script is POSIX complient)
 
 # how to use
 git clone the repo
