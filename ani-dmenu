@@ -157,7 +157,7 @@ final $anime_id $ep_no
 
 ## here , we check if the anime_id is in the file. if it is there , that line has to be deleted
 
-LineToDelete="$(grep " $anime_id " $file )\n" 
+LineToDelete="$(grep " $anime_id " $file )" 
 
 if [ "$LineToDelete" != "" ] 
 then
