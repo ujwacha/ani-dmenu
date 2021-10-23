@@ -1,10 +1,11 @@
 #!/bin/bash
 
-### dependencies : grep , sed , mpv , curl , dmenu
+### dependencies : grep , sed , mpv , curl , dmenu , awk , tail
+file=$HOME/.cache/ani-dmenu-hist
+anime_id=$(cat $file | tail -n 1 | awk '{print $1}')
+ep_no=$(cat $file | tail -n 1 |awk '{print $2}')
 
-ani=$HOME/.cache/ani-dmenu/anime
-ep=$HOME/.cache/ani-dmenu/ep
-Temp=$HOME/.cache/ani-dmenu/temp
+Temp=$HOME/.cache/ani-dmenu-temp
 
 ##### this is a fork of ani-cli but for dmenu
 ##### credit to the developers of https://github.com/pystardust/ani-cli for all the functions used
@@ -85,52 +86,85 @@ open_episode () {
 
 }
 
+final () {
+
+	anime=$1
+	ep=$2
+        max=$(search_eps $anime_id)
+	if [ $ep -lt 1 ] || [ $ep -gt $max ]
+	then 
+			echo "the ep is out of range" | dmenu >> /dev/null
+			exit ;
+	fi
+
+	open_episode $anime $ep
+
+
+}
+
 ########
 ##main##
 ########
 
-wat=$(printf "continue\nsearch" | dmenu) ;
+##### options ########
+op1="next"
+op2="replay"
+op3="previous"
+op4="search"
+op5="history"
 
-if [ "$wat" = "continue" ]
+wat=$(printf "%s\n%s\n%s\n%s\n%s" $op1 $op2 $op3 $op4 $op5 | dmenu) ;
+
+
+
+case $wat in
+        $op1 )
+                ep_no=$(( ep_no + 1 ))
+
+		;;
+        $op2 )
+
+                ### continue ;
+                ;;
+        $op3 )
+
+                ep_no=$(( ep_no -1 ))
+                ;;
+        $op4 )
+                search_anime $(echo | dmenu -p "Search Anime :" | tr ' ' '-' ) > $Temp
+                anime_id=$(cat $Temp | dmenu -l 20 -p "Select Anime :")
+                max=$(search_eps $anime_id)
+
+                ep_no=$(echo | dmenu -p "ep no[max:"$max"]")
+		rm $Temp
+                ;;
+	$op5)
+		sector=$(cat $file | dmenu -l 10 -p "History :") 
+		ep_no=$(echo $sector | awk '{print $2}' )
+		anime_id=$(echo $sector | awk '{print $1}' )
+		;;
+        * )
+
+                echo " right option not selected " | dmenu >> /dev/null
+                exit
+                ;;
+
+        esac
+
+# use the final function to play the anime episoide
+
+final $anime_id $ep_no
+
+## here , we check if the anime_id is in the file. if it is there , that line has to be deleted
+
+LineToDelete="$(grep " $anime_id " $file )\n" 
+
+if [ "$LineToDelete" != "" ] 
 then
-	anime_id=$(cat $ani)
-	
-	ep_no=$(( $(cat $ep) + 1 ))
-	max=$(search_eps $anime_id)
-	
-	echo $anime_id > $ani
-	echo $ep_no > $ep
-	
-	if (( $ep_no >= 1 )) && (( $ep_no <= $max ))
-	then
-	
-		open_episode $anime_id $ep_no
-	else 
-	
-		echo "the last ep of $anime_id is ep $max , hope there's another season" | dmenu >> /dev/null
-	fi
-
-
-
-else
-
-	search_anime $(echo | dmenu -p "Search Anime :" | tr ' ' '-' ) > $Temp
-	anime_id=$(cat $Temp | dmenu -l 20 -p "Select Anime :") 
-
-	max=$(search_eps $anime_id)
-	ep_no=$(echo | dmenu -p "ep no[max:"$max"]")
-
-	echo $anime_id > $ani
-	echo $ep_no > $ep
-
-	if (( $ep_no >= 1 )) && (( $ep_no <= $max ))
-	then
-	
-		open_episode $anime_id $ep_no
-	else 
-		echo "the last ep of $anime_id is ep $max , hope there's another season" | dmenu >> /dev/null
-	
-	fi
-
-
+	## redirecting it to a temporary file so that nothing gets fucked up
+	sed "s/$LineToDelete//" $file > "$file.temp"
+	cat "$file.temp" > $file
+	rm "$file.temp"
 fi
+
+printf " %s %s\n" $anime_id $ep_no >> $file

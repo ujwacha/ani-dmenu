@@ -6,10 +6,10 @@ with dmenu , everything is made intutive
 have fun , my fellow weebs
 
 # dependencies
-dmenu , sed , grep , mpv , curl
+dmenu , sed , grep , mpv , curl , awk , tail
 
 # supported OS
-GNU/Linux , BSD and macOS(probably because the script is POSIX complient)
+GNU/Linux and BSD
 
 # how to use
 git clone the repo
@@ -20,15 +20,11 @@ go to the ani-dmenu directory
 ```bash
 cd ani-dmenu
 ```
-make a directory to store temporary files
-```bash
-mkdir $HOME/.cache/ani-dmenu
-```
 make the script executable
 ```bash
 chmod +x ani-dmenu
 ```
-run the script from bash (or any POSIX complaint shell, just don't run this in FISH)
+run the script with bash (or any POSIX complaint shell, just don't run this in FISH)
 ```bash
 bash ./ani-dmenu
 ```
