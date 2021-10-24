@@ -8,7 +8,7 @@ ep_no=$(cat $file | tail -n 1 |awk '{print $2}')
 Temp=$HOME/.cache/ani-dmenu-temp
 
 ##### this is a fork of ani-cli but for dmenu
-##### credit to the developers of https://github.com/pystardust/ani-cli for all the functions used
+##### credit to the developers of https://github.com/pystardust/ani-cli for the functions used
 
 
 search_anime() {
