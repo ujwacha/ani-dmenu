@@ -162,9 +162,14 @@ LineToDelete="$(grep " $anime_id " $file )"
 if [ "$LineToDelete" != "" ] 
 then
 	## redirecting it to a temporary file so that nothing gets fucked up
-	sed "s/$LineToDelete//" $file > "$file.temp"
-	cat "$file.temp" > $file
-	rm "$file.temp"
+	sed -i  "s/$LineToDelete//" $file #### these parts are commented because they were a part of the script back then but are not right noe > "$file.temp"
+	###  cat "$file.temp" > $file
+	###  rm "$file.temp"
 fi
 
+### append the last anime and ep no in the history file
 printf " %s %s\n" $anime_id $ep_no >> $file
+
+### remove all empty lines from the history file to make the data clean
+
+sed -i '/^$/d' $file
