@@ -8,14 +8,14 @@ ep_no=$(cat $file | tail -n 1 |awk '{print $2}')
 Temp=$HOME/.cache/ani-dmenu-temp
 
 ##### this is a fork of ani-cli but for dmenu
-##### credit to the developers of https://github.com/pystardust/ani-cli for the functions used
+##### credit to the developers of https://github.com/pystardust/ani-cli for all the functions used
 
 
 search_anime() {
 	search=$1
 	titlepattern='<a href="/category/'
 
-        curl -s "https://gogoanime.vc//search.html" \
+        curl -s "https://gogoanime.cm//search.html" \
                 -G \
                 -d "keyword=$search" |
         sed -n -E '
@@ -27,7 +27,7 @@ search_eps () {
         # get available episodes for anime_id
         anime_id=$1
 
-        curl -s "https://gogoanime.vc/category/$anime_id" |
+        curl -s "https://gogoanime.cm/category/$anime_id" |
         sed -n -E '
                 /^[[:space:]]*<a href="#" class="active" ep_start/{
                 s/.* '\''([0-9]*)'\'' ep_end = '\''([0-9]*)'\''.*/\2/p
@@ -43,7 +43,7 @@ get_embedded_video_link() {
         ep_no=$2
 
         # credits to fork: https://github.com/Dink4n/ani-cli for the fix
-        curl -s "https://gogoanime.vc/$anime_id-episode-$ep_no" |
+        curl -s "https://gogoanime.cm/$anime_id-episode-$ep_no" |
         sed -n -E '
                 /^[[:space:]]*<a href="#" rel="100"/{
                 s/.*data-video="([^"]*)".*/https:\1/p
