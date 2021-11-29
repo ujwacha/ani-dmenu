@@ -7,6 +7,10 @@ ep_no=$(cat $file | tail -n 1 |awk '{print $2}')
 
 Temp=$HOME/.cache/ani-dmenu-temp
 
+#this is the domain , if one day you find this script and if i have already stopped maintaining this and if gogoanime still exists , just change the Domain variable to the domain name of gogoanime . or you can just go to https://github.com/pystardust/ani-cli and copy the domain they have put ! thank you for using this crap script ......
+Domain="https://www1.gogoanime.cm" 
+
+
 ##### this is a fork of ani-cli but for dmenu
 ##### credit to the developers of https://github.com/pystardust/ani-cli for all the functions used
 
@@ -15,7 +19,7 @@ search_anime() {
 	search=$1
 	titlepattern='<a href="/category/'
 
-        curl -s "https://gogoanime.cm//search.html" \
+        curl -s "$Domain//search.html" \
                 -G \
                 -d "keyword=$search" |
         sed -n -E '
@@ -27,7 +31,7 @@ search_eps () {
         # get available episodes for anime_id
         anime_id=$1
 
-        curl -s "https://gogoanime.cm/category/$anime_id" |
+        curl -s "$Domain/category/$anime_id" |
         sed -n -E '
                 /^[[:space:]]*<a href="#" class="active" ep_start/{
                 s/.* '\''([0-9]*)'\'' ep_end = '\''([0-9]*)'\''.*/\2/p
@@ -43,7 +47,7 @@ get_embedded_video_link() {
         ep_no=$2
 
         # credits to fork: https://github.com/Dink4n/ani-cli for the fix
-        curl -s "https://gogoanime.cm/$anime_id-episode-$ep_no" |
+        curl -s "$Domain/$anime_id-episode-$ep_no" |
         sed -n -E '
                 /^[[:space:]]*<a href="#" rel="100"/{
                 s/.*data-video="([^"]*)".*/https:\1/p
