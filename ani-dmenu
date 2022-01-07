@@ -8,7 +8,10 @@ ep_no=$(cat $file | tail -n 1 |awk '{print $2}')
 Temp=$HOME/.cache/ani-dmenu-temp
 
 #this is the domain , if one day you find this script and if i have already stopped maintaining this and if gogoanime still exists , just change the Domain variable to the domain name of gogoanime . or you can just go to https://github.com/pystardust/ani-cli and copy the domain they have put ! thank you for using this crap script ......
-Domain="https://www1.gogoanime.cm" 
+
+### those guys at ani-cli are so cool , they figured out a way to scrape even the fucking domain . Wish i was as good as them
+Domain=$(curl -s -L -o /dev/null -w "%{url_effective}\n" https://gogoanime.cm)
+
 
 
 ##### this is a fork of ani-cli but for dmenu
