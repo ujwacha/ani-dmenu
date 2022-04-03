@@ -19,7 +19,7 @@ quality=best
 ##### credit to the developers of https://github.com/pystardust/ani-cli for all the functions used
 
 
-base_url=$(curl -s -L -o /dev/null -w "%{url_effective}\n" https://gogoanime.cm)
+###########base_url=$(curl -s -L -o /dev/null -w "%{url_effective}\n" https://gogoanime.cm)
 
 
 
