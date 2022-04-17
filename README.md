@@ -1,30 +1,29 @@
 # ani-dmenu
-a dmenu fork of ani-cli
-
-# How To Use
-with dmenu , everything is made intutive
+a dmenu fork of ani-cli with dmenu , everything is made intutive: works on GNU/Linux and BSD
 have fun , my fellow weebs
 
 # dependencies
 dmenu , sed , grep , mpv , curl , awk , tail
 
-# supported OS
-GNU/Linux and BSD
-
-# how to use
-git clone the repo
+# how to install
+clone the repo and go inside the ani-dmenu dir
 ```bash
-git clone https://github.com/UjwAcha/ani-dmenu.git
-```
-go to the ani-dmenu directory
-```bash
-cd ani-dmenu
+git clone https://github.com/UjwAcha/ani-dmenu.git && cd ani-dmenu
 ```
 make the script executable
 ```bash
 chmod +x ani-dmenu
 ```
-run the script with bash (or any POSIX complaint shell, just don't run this in FISH)
+copy the script to your bin
 ```bash
-bash ./ani-dmenu
+cp ani-dmenu /usr/local/bin/ani-dmenu
+```
+alternatively you can symlink it, that way you can use git pull to keep the script updated (this is optional)
+```bash
+ln -s <path to ani-dmenu dir>/ani-dmenu /usr/local/bin/dmenu
+```
+
+# how to use
+```bash
+ani-dmenu
 ```
